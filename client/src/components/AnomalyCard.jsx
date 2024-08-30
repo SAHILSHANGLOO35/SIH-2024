@@ -1,9 +1,18 @@
 // AnomalyCard.jsx
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const AnomalyCard = ({ videoUrl, date, description }) => {
+  const navigate = useNavigate();
+
   const handleWatchClick = () => {
-    window.open(videoUrl, "_blank");
+    navigate(`/anomaly-video/${videoUrl}`, {
+      state: {
+        videoUrl,
+        date,
+        description,
+      },
+    });
   };
 
   return (

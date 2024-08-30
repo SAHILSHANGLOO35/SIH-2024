@@ -1,23 +1,42 @@
-// Anomaly.jsx
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar';
 import AnomalyCard from './AnomalyCard';
-
-const anomalies = [
-  {
-    videoUrl: 'path_to_video_1.mp4',
-    date: '2024-08-30',
-    description: 'Anomaly detected at street corner.',
-  },
-  {
-    videoUrl: 'path_to_video_2.mp4',
-    date: '2024-08-29',
-    description: 'Suspicious activity near the park.',
-  },
-  // Add more anomalies as needed
-];
+import AnomalyModal from './AnomalyModal'; // Import the AnomalyModal component
 
 const Anomaly = () => {
+  const [anomalies, setAnomalies] = useState([]);
+  const [isModalVisible, setIsModalVisible] = useState(false); // State to manage modal visibility
+  
+  // Function to fetch anomalies from the API
+  const fetchAnomalies = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/home/anomalies'); // Replace with your actual API URL
+      const data = await response.json();
+      console.log(data);
+      
+      // Check if new anomalies are received
+      if (data.anomalies && data.anomalies.length > 0) {
+        setAnomalies(data.anomalies);
+        setIsModalVisible(true); // Show the modal when new anomalies are detected
+      }
+    } catch (error) {
+      console.error("Error fetching anomalies:", error);
+    }
+  };
+
+  // Fetch anomalies on component mount and then every 2 seconds
+  useEffect(() => {
+    fetchAnomalies(); // Initial fetch
+    const interval = setInterval(fetchAnomalies, 2000); // Polling every 2 seconds
+    
+    return () => clearInterval(interval); // Cleanup interval on component unmount
+  }, []);
+
+  // Function to handle modal close
+  const handleModalClose = () => {
+    setIsModalVisible(false); // Close the modal
+  };
+
   return (
     <>
       <Navbar />
@@ -28,8 +47,8 @@ const Anomaly = () => {
             anomalies.map((anomaly, index) => (
               <AnomalyCard
                 key={index}
-                videoUrl={anomaly.videoUrl}
-                date={anomaly.date}
+                videoUrl={anomaly.path}
+                date={anomaly.dateTime}
                 description={anomaly.description}
               />
             ))
@@ -38,6 +57,9 @@ const Anomaly = () => {
           )}
         </div>
       </div>
+
+      {/* Render AnomalyModal when isModalVisible is true */}
+      {isModalVisible && <AnomalyModal onClose={handleModalClose} />}
     </>
   );
 };

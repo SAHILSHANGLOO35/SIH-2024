@@ -5,7 +5,7 @@ const AnomalyModal = ({ onClose }) => {
   const audioRef = useRef(null);
 
   useEffect(() => {
-    // Play the audio when the component mounts if user interaction allows
+    // Function to play audio when the component mounts
     const playAudio = () => {
       if (audioRef.current) {
         audioRef.current.play().catch((error) => {
@@ -13,13 +13,11 @@ const AnomalyModal = ({ onClose }) => {
         });
       }
     };
-    playAudio();
-    // Add a user interaction event to play the audio
-    window.addEventListener('click', playAudio);
+
+    playAudio(); // Attempt to play audio immediately when the modal mounts
 
     // Cleanup function to stop audio when the component unmounts or is dismissed
     return () => {
-      window.removeEventListener('click', playAudio);
       if (audioRef.current) {
         audioRef.current.pause();
         audioRef.current.currentTime = 0; // Reset audio to the beginning
