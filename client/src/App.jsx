@@ -1,16 +1,18 @@
-import Anamoly from "./components/Anamoly";
+import Anomaly from "./components/Anomaly";
 import Navbar from "./components/Navbar";
-import AnamolyVideo from "./components/AnamloyVideo";
+import AnomalyVideo from "./components/AnomalyVideo";
 import { BrowserRouter } from 'react-router-dom'
 import { Routes, Route } from 'react-router-dom';
+import AnomalyCard from "./components/AnomalyCard";
 
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-            <Route path="/anamolies" element={<Anamoly />} />
-            <Route path="/anamoly-video" element={<AnamolyVideo />} />
+            <Route path="/anomaly" element={<Anomaly />} />
+            <Route path="/anomaly-video" element={<AnomalyVideo />} />
+            <Route path="/anomaly-card" element={<AnomalyCard />} />
          </Routes>
 
     </BrowserRouter>

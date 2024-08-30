@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "./Navbar";
 
-const AnamolyVideo = ({ videoUrl, date, description }) => {
+const AnomalyVideo = ({ videoUrl, date, description }) => {
   const handleCallAmbulance = () => {
     // Replace with actual call functionality or link
     alert("Calling Ambulance...");
@@ -52,4 +52,4 @@ const AnamolyVideo = ({ videoUrl, date, description }) => {
   );
 };
 
-export default AnamolyVideo;
+export default AnomalyVideo;
